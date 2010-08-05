@@ -1,0 +1,15 @@
+# Defaults used by daemontools setups and execution scripts
+# Modify this file if needed before running setup scripts
+
+# Needed for daemontools
+export TEMPLATE_DIR="/etc/sv"     # Holds template directories containing daemontools scripts.
+export SERVICE_DIR="/etc/service" # Holds directories that get linked to template directories.
+
+# Needed by setup scripts
+export SEASIDE_VERSION=3.0        # Must be 2.8 or 3.0
+export STARTING_PORT=9001         # First port for Gems -- will increment by one through ending port
+export ENDING_PORT=9003           # Last port for Gems
+
+# The following file must export these ENV variables:
+# GEMSTONE, GEMSTONE_LOGDIR, GEMSTONE_NAME, GEMSTONE_USER
+export GEMSTONE_CONFIG="/opt/gemstone/product/seaside/defSeaside"   # GemStone ENV setup file

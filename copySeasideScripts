@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+# Find out where files are located
+source config
+source $GEMSTONE_CONFIG
+
+echo "`basename $0` copies modified Seaside scripts to $GEMSTONE/seaside/bin"
+echo "They do not overwrite existing scripts, as they have different names."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+chmod 777 $GEMSTONE/seaside/bin
+setuidgid $GEMSTONE_USER cp seaside/* $GEMSTONE/seaside/bin
+chmod 555 $GEMSTONE/seaside/bin
+
+# Success
+exit 0

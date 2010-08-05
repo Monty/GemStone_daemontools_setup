@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+### Warning!!! Don't use leading spaces rather than leading tabs in "Here Documents" ###
+
+echo "`basename $0` creates scripts to start/stop GemStone/S in /etc/init.d"
+echo "and etc/default. It does not create links in /etc/rc<n>.d"
+
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+cp etc/init.d/* /etc/init.d
+
+# Create /etc/default/gemstone
+cat > /etc/default/gemstone <<-EOF
+	#!/bin/bash
+	# Enable Gemstone init scripts, necessary for start on boot
+	# 1=enabled 0=disabled
+	ENABLED=1
+
+EOF
+cat config >> /etc/default/gemstone
+chmod 644 /etc/default/gemstone
+
+# Success
+exit 0

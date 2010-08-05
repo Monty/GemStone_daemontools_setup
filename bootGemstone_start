@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+### Warning!!! Don't use leading spaces rather than leading tabs in "Here Documents" ###
+
+echo "`basename $0` links the GemStone/S startup files in /etc/init.d to appropriate"
+echo "locations in /etc/rc<n>.d for a Ubuntu based GemStone appliance."
+echo "You may want to change the destination names for your system".
+
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+for i in "/etc/rc0.d" "/etc/rc1.d" "/etc/rc6.d" ; do
+    cd $i
+    ln -s ../init.d/gemstone K20gemstone
+    ln -s ../init.d/netldi K10netldi
+    ln -s ../init.d/topaz K05topaz
+done
+
+for i in " /etc/rc2.d" "/etc/rc3.d" "/etc/rc4.d" "/etc/rc5.d" ; do
+    cd $i
+    ln -s ../init.d/gemstone S96gemstone
+    ln -s ../init.d/netldi S95netldi
+    ln -s ../init.d/topaz S97topaz
+done
+
+# Success
+exit 0

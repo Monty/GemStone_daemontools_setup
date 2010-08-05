@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+echo "DANGER: This script removes all GemStone daemontools and boot files."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+rm -f /etc/default/gemstone
+rm -f /etc/init.d/gemstone /etc/init.d/netldi /etc/init.d/topaz
+rm -f $SEASIDE_BIN/maintenanceGem $SEASIDE_BIN/maintenanceGem30
+rm -f $SEASIDE_BIN/seasideGem30 $SEASIDE_BIN/seasideGem_FastCGI
+rm -rf /etc/sv/gs_* /etc/service/gs_*
+rm -f /etc/rc?.d/*gemstone /etc/rc?.d/*netldi /etc/rc?.d/*topaz
+
+# Success
+exit 0

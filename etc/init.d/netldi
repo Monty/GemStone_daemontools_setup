@@ -1,0 +1,75 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          gemstone-netldi
+# Required-Stop:     $all
+# Required-Start:    gemstone-stone
+# Default-Start:     3
+# Default-Stop:      0 6
+# Short-Description: Start and stop a Gemstone netldi
+# Description:       This script starts and stops a Gemstone netldi
+### END INIT INFO
+
+. /lib/lsb/init-functions
+. /etc/default/rcS
+
+# STARTUP_DEFAULTS must provide $GEMSTONE_CONFIG, the GemStone ENV setup file
+STARTUP_DEFAULTS=/etc/default/gemstone
+
+if [ -s $STARTUP_DEFAULTS ]; then
+    . $STARTUP_DEFAULTS
+    case "x$ENABLED" in
+        xtrue|x1|xyes)
+                ;;
+        *)
+                log_failure_msg "Gemstone startup disabled."
+                log_failure_msg "Edit /etc/default/gemstone, set ENABLED=1 to enable Gemstone startup at boot time"
+                exit 1
+                ;;
+    esac
+else
+    log_failure_msg "Configuration file $GEMSTONE_CONFIG not found, aborting startup"
+    exit 1
+fi
+		
+if [ -s $GEMSTONE_CONFIG ]; then
+    . $GEMSTONE_CONFIG
+else
+    log_failure_msg "Configuration file $GEMSTONE_CONFIG not found, aborting startup"
+    exit 1
+fi
+
+export GEMSTONE GEMSTONE_SYS_CONF GEMSTONE_EXE_CONF GEMSTONE_DATADIR GEMSTONE_LOGDIR \
+       GEMSTONE_KEYFILE GEMSTONE_NAME PATH MANPATH LD_LIBRARY_PATH
+
+netldi_start()
+{
+    # Move to a writable working directory
+    cd /tmp
+    sudo -E -u $GEMSTONE_USER $GEMSTONE/bin/startnetldi -g -a $GEMSTONE_USER
+}
+
+netldi_stop()
+{
+    sudo -u $GEMSTONE_USER $GEMSTONE/bin/stopnetldi
+}
+
+case "$1" in
+    start)
+            netldi_start 
+            ;;
+    restart)
+            netldi_stop
+            netldi_start
+            ;;
+    stop)
+            netldi_stop
+            ;;
+    status)
+            $GEMSTONE/bin/gslist -l
+            ;;
+    *)
+            log_success_msg "Usage: /etc/init.d/netldi (start|stop|restart|status)"
+            ;;
+esac
+

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+echo "This script stops all Gemstone processes."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+/etc/init.d/topaz stop 1 > /dev/null
+/etc/init.d/gemstone stop 1 > /dev/null
+/etc/init.d/netldi stop 1 > /dev/null
+
+# Success
+exit 0
