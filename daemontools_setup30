@@ -34,7 +34,7 @@ cat > $TEMPLATE_DIR/gs_maintenance/run  <<-EOF
 	#!/bin/bash
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
-	\$GEMSTONE/bin/waitstone $STONENAME 2
+	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/maintenanceGem30 daemontools
 EOF
 chmod 755 $TEMPLATE_DIR/gs_maintenance/run
@@ -46,7 +46,7 @@ cat > $TEMPLATE_DIR/gs_fastcgi/run  <<-EOF
 	source \$GEMSTONE_CONFIG
 	scriptpath=\$(dirname \$0)
 	[ -r \$scriptpath/config.local ] && source \$scriptpath/config.local
-	\$GEMSTONE/bin/waitstone $STONENAME 2
+	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/seasideGem30 daemon \$GEM_PORT daemontools
 EOF
 chmod 755 $TEMPLATE_DIR/gs_fastcgi/run
