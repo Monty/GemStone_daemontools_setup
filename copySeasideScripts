@@ -23,9 +23,9 @@ case "$cont" in
     ;;
 esac
 
-chmod 777 $GEMSTONE/seaside/bin
-setuidgid $GEMSTONE_USER cp seaside/* $GEMSTONE/seaside/bin
-chmod 555 $GEMSTONE/seaside/bin
+GS_OWNER="`ls -ld $GEMSTONE/seaside/bin | awk '{ print $3 ":" $4 }'`"
+chown $GS_OWNER seaside/*
+cp -p seaside/* $GEMSTONE/seaside/bin
 
 # Success
 exit 0
