@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Find out where files are located
+source config
+source $GEMSTONE_CONFIG
+
+echo "`basename $0` loads Seaside 3.0 into a GemStone/S system that"
+echo "does not have Seaside installed. It stops any running gems first."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+# Stop Topaz, but make sure Stone is running.
+/etc/init.d/topaz stop
+/etc/init.d/gemstone start
+
+if [ -s $GEMSTONE/seaside/etc/gemstone.secret ]; then
+    . $GEMSTONE/seaside/etc/gemstone.secret
+else
+    echo 'Missing password file $GEMSTONE/seaside/etc/gemstone.secret'
+    exit 1
+fi
+
+$GEMSTONE/bin/topaz -l -T50000 <<-EOF
+
+	set user DataCurator pass $GEMSTONE_CURATOR_PASS gems $GEMSTONE_NAME
+
+	iferror where
+
+	login
+
+	run
+
+	| autoCommit|
+	autoCommit := MCPlatformSupport autoCommit.
+	MCPlatformSupport autoCommit: true. "needed if loading from Topaz"
+	MCPlatformSupport commitOnAlmostOutOfMemoryDuring: [[
+	    Gofer project load: 'Seaside30'version: '3.0.0-rc.1' 
+	group: #( 'ALL').
+	    Gofer project load: 'Pier2' version: '2.0.6' group: 'ALL'.
+	    Gofer project load: 'PierAddOns2' version: '2.0.6' 
+	group: 'ALL'.
+	    ]
+	    on: Warning
+   	    do: [:ex |
+	        Transcript cr; show: ex description.
+	        ex resume ]].
+	MCPlatformSupport autoCommit: autoCommit.
+	%
+
+	logout
+	errorCount
+	EOF
+
+/etc/init.d/topaz start
+
+# Success
+exit 0
+
