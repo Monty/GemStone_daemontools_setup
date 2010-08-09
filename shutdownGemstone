@@ -5,6 +5,10 @@ if [ $UID -ne 0 ]; then
    exit
 fi 
 
+# Find out where files are located
+source config
+source $GEMSTONE_CONFIG
+
 echo "This script stops all Gemstone processes."
 echo "Shall I continue? (Y/N)"
 
@@ -21,6 +25,25 @@ esac
 /etc/init.d/topaz stop 1 > /dev/null
 /etc/init.d/gemstone stop 1 > /dev/null
 /etc/init.d/netldi stop 1 > /dev/null
+
+# Cleanup logfiles too?
+numfiles="`ls -A $GEMSTONE_LOGDIR | wc -w `"
+if [ $numfiles -gt 0 ]; then 
+    echo "I found these logfiles:"
+    ls -A $GEMSTONE_LOGDIR
+    echo "Shall I remove them? (Y/N)"
+
+    read cont
+    case "$cont" in
+        y|Y|yes)
+        rm -rf $GEMSTONE_LOGDIR/* $GEMSTONE_DATADIR/*pid
+        ;;
+        *)
+        echo "Not removing old logfiles."
+        exit
+        ;;
+    esac
+fi
 
 # Success
 exit 0
