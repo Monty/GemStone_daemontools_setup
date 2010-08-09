@@ -9,7 +9,9 @@ source config
 source $GEMSTONE_CONFIG
 SEASIDE_BIN=$GEMSTONE/seaside/bin
 
-echo "DANGER: This script removes all GemStone daemontools and boot files."
+echo "DANGER: This script removes all GemStone daemontools and boot files"
+echo "that were installed by other scripts in this directory. It does not"
+echo "stop any running GemStone instances."
 echo "Shall I continue? (Y/N)"
 
 read cont

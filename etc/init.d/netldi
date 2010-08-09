@@ -64,9 +64,10 @@ case "$1" in
             ;;
     stop)
             netldi_stop
+            $GEMSTONE/bin/gslist -cq
             ;;
     status)
-            $GEMSTONE/bin/gslist -l
+            $GEMSTONE/bin/gslist -clv
             ;;
     *)
             log_success_msg "Usage: /etc/init.d/netldi (start|stop|restart|status)"

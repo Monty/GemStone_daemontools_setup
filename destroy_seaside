@@ -23,11 +23,17 @@ case "$cont" in
     ;;
 esac
 
+echo "Stopping GemStone ..."
+
 /etc/init.d/topaz stop 1 > /dev/null
 /etc/init.d/gemstone stop 1 > /dev/null
 /etc/init.d/netldi stop 1 > /dev/null
 
+gslist -clv
+
 rm -f $GEMSTONE_DATADIR/*.dbf $GEMSTONE_DATADIR/*.pid
+
+echo "Copying $GEMSTONE/bin/extent0.seaside.dbf to $GEMSTONE_DATADIR/extent0.dbf"
 cp $GEMSTONE/bin/extent0.seaside.dbf $GEMSTONE_DATADIR/extent0.dbf
 chmod 660 $GEMSTONE_DATADIR/extent0.dbf
 GS_OWNER="`ls -ld $GEMSTONE/seaside/bin | awk '{ print $3 ":" $4 }'`"

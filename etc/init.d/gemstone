@@ -55,9 +55,10 @@ case "$1" in
             ;;
     stop)
             sudo -E -u $GEMSTONE_USER $GEMSTONE/seaside/bin/stopGemstone
+            $GEMSTONE/bin/gslist -cq
             ;;
     status)
-            $GEMSTONE/bin/gslist -l
+            $GEMSTONE/bin/gslist -clv
             ;;
     *)
             log_success_msg "Usage: /etc/init.d/gemstone (start|stop|restart|status)"
