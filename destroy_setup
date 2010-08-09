@@ -5,6 +5,10 @@ if [ $UID -ne 0 ]; then
    exit
 fi 
 
+source config
+source $GEMSTONE_CONFIG
+SEASIDE_BIN=$GEMSTONE/seaside/bin
+
 echo "DANGER: This script removes all GemStone daemontools and boot files."
 echo "Shall I continue? (Y/N)"
 
@@ -18,7 +22,6 @@ case "$cont" in
     ;;
 esac
 
-rm -f /etc/default/gemstone
 rm -f /etc/init.d/gemstone /etc/init.d/netldi /etc/init.d/topaz
 rm -f $SEASIDE_BIN/maintenanceGem $SEASIDE_BIN/maintenanceGem30
 rm -f $SEASIDE_BIN/seasideGem30 $SEASIDE_BIN/seasideGem_FastCGI

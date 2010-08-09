@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+source config
+source $GEMSTONE_CONFIG
+
+echo "DANGER: This script destroys your current GemStone Seaside repository"
+echo "and replaces it with a repository that does not yet include Seaside."
+echo "Afterwards, you must either run seaside_setup30, or load your own custom Seaside."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+/etc/init.d/topaz stop 1 > /dev/null
+/etc/init.d/gemstone stop 1 > /dev/null
+/etc/init.d/netldi stop 1 > /dev/null
+
+rm -f $GEMSTONE_DATADIR/*.dbf $GEMSTONE_DATADIR/*.pid
+cp $GEMSTONE/bin/extent0.seaside.dbf $GEMSTONE_DATADIR/extent0.dbf
+chmod 660 $GEMSTONE_DATADIR/extent0.dbf
+GS_OWNER="`ls -ld $GEMSTONE/seaside/bin | awk '{ print $3 ":" $4 }'`"
+chown $GS_OWNER $GEMSTONE_DATADIR/extent0.dbf
+
+# Success
+exit 0
