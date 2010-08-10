@@ -29,7 +29,7 @@ esac
 # Create directories expected by daemontools (http://cr.yp.to/daemontools.html)
 mkdir -p $SERVICE_DIR 
 
-# Link templates into services directory
+# Link templates into service directory
 ln -s $TEMPLATE_DIR/gs_maintenance $SERVICE_DIR/gs_maintenance
 #
 for i in `ls -d $TEMPLATE_DIR/gs_fastcgi-*` ; do

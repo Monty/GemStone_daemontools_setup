@@ -44,19 +44,19 @@ fi
 export GEMSTONE GEMSTONE_SYS_CONF GEMSTONE_EXE_CONF GEMSTONE_DATADIR GEMSTONE_LOGDIR \
        GEMSTONE_KEYFILE GEMSTONE_NAME PATH MANPATH LD_LIBRARY_PATH
 
-# Attempt to work around startup problems
-sleep 5
 
 case "$1" in
     start|restart)
+            # Attempt to work around startup problems
+            sleep 5
             # Change to a writable working directory
             cd /tmp
+            # Clear any invalid locks on startup
+            $GEMSTONE/bin/gslist -cq > /dev/null
             sudo -E -u $GEMSTONE_USER $GEMSTONE/seaside/bin/startGemstone
             ;;
     stop)
             sudo -E -u $GEMSTONE_USER $GEMSTONE/seaside/bin/stopGemstone
-            # Clear any stuck locks on shutdown
-            $GEMSTONE/bin/gslist -cq > /dev/null
             ;;
     status)
             $GEMSTONE/bin/gslist -clv

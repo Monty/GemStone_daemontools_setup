@@ -46,6 +46,8 @@ netldi_start()
 {
     # Move to a writable working directory
     cd /tmp
+    # Clear any invalid locks on startup
+    $GEMSTONE/bin/gslist -cq > /dev/null
     sudo -E -u $GEMSTONE_USER $GEMSTONE/bin/startnetldi -g -a $GEMSTONE_USER
 }
 
@@ -64,8 +66,6 @@ case "$1" in
             ;;
     stop)
             netldi_stop
-            # Clear any stuck locks on shutdown
-            $GEMSTONE/bin/gslist -cq> /dev/null
             ;;
     status)
             $GEMSTONE/bin/gslist -clv

@@ -47,9 +47,10 @@ topaz_start()
 {
     # Move to a writable working directory
     cd /tmp
+    # Clear any invalid locks on startup
+    $GEMSTONE/bin/gslist -cq > /dev/null
 
     log_success_msg "Waiting for stone to complete startup..."
-    sleep 4
     waitstone $GEMSTONE_NAME
 
     log_success_msg "Starting Gems..."
@@ -68,8 +69,6 @@ topaz_stop()
         echo "Stopping $i ..."
         svc -d $i
     done
-    # Clear any stuck locks on shutdown
-    $GEMSTONE/bin/gslist -cq > /dev/null
 }
 
 topaz_restart()
