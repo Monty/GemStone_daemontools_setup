@@ -3,7 +3,6 @@
 === Prerequisites
 
 * Install and set up GemStone/S 2.4.4.1 or later
-* Load Seaside and any other packages you need into GemStone
 * Install daemontools (sudo apt-get install daemontools daemontools-run svtools)
 Note: It's OK to install daemontools after running the setup, but /etc/init.d/topaz
 won't work until you do.
@@ -14,7 +13,10 @@ Make sure that the config file in this directory is appropriate for your setup.
 Make sure you have root access so the setup can execute properly. Then execute:
   sudo bash ./setupAll.sh
 
+You can load Seaside 3.0 into GemStone by using the seaside_setup30 script, using
+your own customized script, or loading Seaside interactively.
+
 There are some utility scripts not run by setupAll.sh that can be useful when testing.
-Even though they prompt you before executing, you should read them an understand what
-they do before running them.
+Even though they prompt you before executing, you should read them and understand what
+they do before using them -- particularly destroy_seaside and destroy_setup
 
