@@ -68,8 +68,8 @@ topaz_stop()
         echo "Stopping $i ..."
         svc -d $i
     done
-    # Clear any stuck locks
-    $GEMSTONE/bin/gslist -cq
+    # Clear any stuck locks on shutdown
+    $GEMSTONE/bin/gslist -cq > /dev/null
 }
 
 topaz_restart()

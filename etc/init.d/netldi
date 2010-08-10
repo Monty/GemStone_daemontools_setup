@@ -64,7 +64,8 @@ case "$1" in
             ;;
     stop)
             netldi_stop
-            $GEMSTONE/bin/gslist -cq
+            # Clear any stuck locks on shutdown
+            $GEMSTONE/bin/gslist -cq> /dev/null
             ;;
     status)
             $GEMSTONE/bin/gslist -clv
