@@ -6,7 +6,6 @@ if [ $UID -ne 0 ]; then
 fi 
 
 echo "DANGER: This script *destroys* things, do NOT run it unless you know what you are doing"
-echo "It's normally run by mounting the Appliance disk, not within a running system."
 echo "Continue anyway? (Y/N)"
 
 read cont
@@ -19,6 +18,9 @@ case "$cont" in
     ;;
 esac
 
+/etc/init.d/rsyslog stop
+apt-get clean
+
 cd /
 
 rm /home/glass/.bash_history
@@ -28,10 +30,10 @@ rm -f /home/glass/.sudo_as_admin_successful
 rm -f /home/glass/.viminfo
 rm -f /home/glass/.vsd*
 rm -f /home/glass/.Xauthority
-rm -f /home/glass/statmon*
 
 rm /opt/gemstone/log/*
 rm /opt/gemstone/locks/*
+rm /opt/gemstone/stats*
 
 rm -rf /root
 mkdir /root

@@ -28,7 +28,7 @@ rm -f /etc/init.d/gemstone /etc/init.d/netldi /etc/init.d/statmon /etc/init.d/to
 rm -f $SEASIDE_BIN/maintenanceGem $SEASIDE_BIN/maintenanceGem30
 rm -f $SEASIDE_BIN/seasideGem30 $SEASIDE_BIN/seasideGem_FastCGI
 rm -rf /etc/sv/gs_* /etc/service/gs_*
-rm -f /etc/rc?.d/*gemstone /etc/rc?.d/*netldi /etc/rc?.d/*topaz
+rm -f /etc/rc?.d/*gemstone /etc/rc?.d/*netldi /etc/rc?.d/*statmon /etc/rc?.d/*topaz
 
 # Success
 exit 0
