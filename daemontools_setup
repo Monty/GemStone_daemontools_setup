@@ -76,7 +76,22 @@ for i in `seq $STARTING_PORT $ENDING_PORT` ; do
 done  
 
 # Create templates to run a '1 second' and a '60 second' statmon
-
+for i in 1 60 ; do
+    # Rotate '1 second' logs hourly
+    HRS="1"
+    # Rotate '60 second' logs daily
+    [ $i = "60" ] && HRS="24"
+    # echo "Creating template in $TEMPLATE_DIR/gs_statmon-${i}"
+    mkdir -p $TEMPLATE_DIR/gs_statmon-${i}
+    cat > $TEMPLATE_DIR/gs_statmon-${i}/run <<-EOF
+	#!/bin/bash
+	source /etc/default/gemstone
+	source \$GEMSTONE_CONFIG
+	exec setuidgid mkdir -p /home/$GEMSTONE_USER/stats/${i}seconds
+	cd /home/$GEMSTONE_USER/stats/${i}seconds
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -r -h $HRS -i ${i} -A -z
+	EOF
+done
 
 echo "Created daemontools templates:"
 ls -d $TEMPLATE_DIR/gs_*
