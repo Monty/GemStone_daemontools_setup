@@ -10,7 +10,7 @@ source $GEMSTONE_CONFIG
 
 echo "DANGER: This script destroys your current GemStone Seaside repository"
 echo "and replaces it with a repository that does not yet include Seaside."
-echo "Afterwards, you must either run seaside_setup30, or load your own custom Seaside."
+echo "Afterwards, you must either run installSeaside30, or load your own custom Seaside."
 echo "Shall I continue? (Y/N)"
 
 read cont

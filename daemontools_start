@@ -30,9 +30,10 @@ esac
 mkdir -p $SERVICE_DIR 
 
 # Link templates into service directory
-ln -s $TEMPLATE_DIR/gs_maintenance $SERVICE_DIR/gs_maintenance
-#
-for i in `ls -d $TEMPLATE_DIR/gs_seaside-*` ; do
+# Convention: the underscore is important!
+# Only services starting with "gs_" are linked
+# Services starting with "gs" but no underscore are not
+for i in `ls -d $TEMPLATE_DIR/gs_*` ; do
     # echo "Creating service for $i"
     ln -s $i $SERVICE_DIR/
 done  

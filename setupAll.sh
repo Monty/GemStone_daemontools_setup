@@ -32,10 +32,10 @@ esac
 #
 case "$SEASIDE_VERSION" in
     3.0)
-    ./daemontools_setup30
+    ./daemontools_setup 3.0
     ;;
     2.8)
-    ./daemontools_setup
+    ./daemontools_setup 2.8
     ;;
     *)
     echo "SEASIDE_VERSION in the config file is $SEASIDE_VERSION"

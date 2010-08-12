@@ -11,8 +11,8 @@ fi
 source config
 source $GEMSTONE_CONFIG
 
-echo "`basename $0` creates GemStone/S templates in $TEMPLATE_DIR for daemontools to"
-echo "run worker gems and a maintenance gem. It does not create links in $SERVICE_DIR."
+echo "`basename $0` creates GemStone templates in $TEMPLATE_DIR for daemontools to run"
+echo "Seaside gems, a maintenance gem, and statmons. It does not create links in $SERVICE_DIR."
 
 echo "Shall I continue? (Y/N)"
 
@@ -26,8 +26,23 @@ case "$cont" in
     ;;
 esac
 
+case "$SEASIDE_VERSION" in
+    3.0)
+    MAINT_SCRIPT="maintenanceGem30"
+    GEM_SCRIPT="seasideGem30"
+    ;;
+    2.8)
+    MAINT_SCRIPT="maintenanceGem"
+    GEM_SCRIPT="seasideGem_FastCGI"
+    ;;
+    *)
+    echo "SEASIDE_VERSION in the config file is $SEASIDE_VERSION"
+    echo "it must be either 3.0 or 2.8"
+    ;;
+esac
+
 # Create directories expected by daemontools (http://cr.yp.to/daemontools.html)
-mkdir -p $TEMPLATE_DIR/gs_maintenance $TEMPLATE_DIR/gs_seaside
+mkdir -p $TEMPLATE_DIR/gs_maintenance $TEMPLATE_DIR/gstemplate_seaside
 
 # Create template for running maintenance gem
 cat > $TEMPLATE_DIR/gs_maintenance/run  <<-EOF
@@ -35,30 +50,33 @@ cat > $TEMPLATE_DIR/gs_maintenance/run  <<-EOF
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
 	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/maintenanceGem daemontools
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$MAINT_SCRIPT daemontools
 EOF
 chmod 755 $TEMPLATE_DIR/gs_maintenance/run
 
-# Create master template for running FastCGI gems
-cat > $TEMPLATE_DIR/gs_seaside/run  <<-EOF
+# Create master template for running Seaside gems
+cat > $TEMPLATE_DIR/gstemplate_seaside/run  <<-EOF
 	#!/bin/bash
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
 	scriptpath=\$(dirname \$0)
 	[ -r \$scriptpath/config.local ] && source \$scriptpath/config.local
 	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/seasideGem_FastCGI \$GEM_PORT daemontools
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$GEM_SCRIPT \$GEM_PORT daemontools
 EOF
-chmod 755 $TEMPLATE_DIR/gs_seaside/run
+chmod 755 $TEMPLATE_DIR/gstemplate_seaside/run
 
-# Create templates to run FastCGI gems
+# Create templates to run Seaside gems
 for i in `seq $STARTING_PORT $ENDING_PORT` ; do
     # echo "Creating template in $TEMPLATE_DIR/gs_seaside-${i}"
     mkdir -p $TEMPLATE_DIR/gs_seaside-${i}
-    ln -s /etc/sv/gs_seaside/run $TEMPLATE_DIR/gs_seaside-${i}
+    ln -s /etc/sv/gstemplate_seaside/run $TEMPLATE_DIR/gs_seaside-${i}
     echo "export GEM_PORT=${i}" > $TEMPLATE_DIR/gs_seaside-${i}/config.local
     chmod 644 $TEMPLATE_DIR/gs_seaside-${i}/config.local
 done  
+
+# Create templates to run a '1 second' and a '60 second' statmon
+
 
 echo "Created daemontools templates:"
 ls -d $TEMPLATE_DIR/gs_*
