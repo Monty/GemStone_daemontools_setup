@@ -53,7 +53,7 @@ topaz_start()
 
     log_success_msg "Starting Gems..."
 
-    for i in `ls -d $SERVICE_DIR/gs_*`; do
+    for i in `ls -d $SERVICE_DIR/gs_seaside* $SERVICE_DIR/gs_maintenance` ; do
         echo "Starting $i ..."
         svc -u $i
     done
@@ -63,7 +63,7 @@ topaz_stop()
 {
     log_success_msg "Stopping Gems..."
 
-    for i in `ls -d $SERVICE_DIR/gs_*`; do
+    for i in `ls -d $SERVICE_DIR/gs_seaside* $SERVICE_DIR/gs_maintenance`; do
         echo "Stopping $i ..."
         svc -d $i
     done

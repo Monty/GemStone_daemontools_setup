@@ -6,8 +6,8 @@
 # Required-Start:    $network gemstone-stone
 # Default-Start:     3
 # Default-Stop:      0 6
-# Short-Description: Start and stop Gemstone statmon
-# Description:       This script starts and stops Gemstone statmonitor
+# Short-Description: Start and stop Gemstone statmons
+# Description:       This script starts and stops Gemstone statmonitors
 ### END INIT INFO
 
 . /lib/lsb/init-functions
@@ -51,16 +51,20 @@ statmon_start()
     log_success_msg "Waiting for stone to complete startup..."
     waitstone $GEMSTONE_NAME
 
-    log_success_msg "Starting Statmon..."
-    echo "Starting $SERVICE_DIR/gs_statmon ..."
-    svc -u $SERVICE_DIR/gs_statmon
+    log_success_msg "Starting Statmons..."
+    for i in `ls -d $SERVICE_DIR/gs_statmon*`; do
+        echo "Starting $i ..."
+        svc -u $i
+    done
 }
 
 statmon_stop()
 {
-    log_success_msg "Stopping Statmon..."
-    echo "Stopping $SERVICE_DIR/gs_statmon ..."
-    svc -d $SERVICE_DIR/gs_statmon
+    log_success_msg "Stopping Statmons..."
+    for i in `ls -d $SERVICE_DIR/gs_statmon*`; do
+        echo "Stopping $i ..."
+        svc -d $i
+    done
 }
 
 statmon_restart()

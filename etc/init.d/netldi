@@ -3,7 +3,7 @@
 ### BEGIN INIT INFO
 # Provides:          gemstone-netldi
 # Required-Stop:     $all
-# Required-Start:    gemstone-stone
+# Required-Start:    $network
 # Default-Start:     3
 # Default-Stop:      0 6
 # Short-Description: Start and stop a Gemstone netldi
