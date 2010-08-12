@@ -32,7 +32,7 @@ mkdir -p $SERVICE_DIR
 # Link templates into service directory
 ln -s $TEMPLATE_DIR/gs_maintenance $SERVICE_DIR/gs_maintenance
 #
-for i in `ls -d $TEMPLATE_DIR/gs_fastcgi-*` ; do
+for i in `ls -d $TEMPLATE_DIR/gs_seaside-*` ; do
     # echo "Creating service for $i"
     ln -s $i $SERVICE_DIR/
 done  

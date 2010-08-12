@@ -11,7 +11,7 @@ fi
 source config
 source $GEMSTONE_CONFIG
 
-echo "`basename $0` creates GemStone/S templates  in $TEMPLATE_DIR for daemontools to"
+echo "`basename $0` creates GemStone/S templates in $TEMPLATE_DIR for daemontools to"
 echo "run worker gems and a maintenance gem. It does not create links in $SERVICE_DIR."
 
 echo "Shall I continue? (Y/N)"
@@ -27,7 +27,7 @@ case "$cont" in
 esac
 
 # Create directories expected by daemontools (http://cr.yp.to/daemontools.html)
-mkdir -p $TEMPLATE_DIR/gs_maintenance $TEMPLATE_DIR/gs_fastcgi
+mkdir -p $TEMPLATE_DIR/gs_maintenance $TEMPLATE_DIR/gs_seaside
 
 # Create template for running maintenance gem
 cat > $TEMPLATE_DIR/gs_maintenance/run  <<-EOF
@@ -40,7 +40,7 @@ EOF
 chmod 755 $TEMPLATE_DIR/gs_maintenance/run
 
 # Create master template for running FastCGI gems
-cat > $TEMPLATE_DIR/gs_fastcgi/run  <<-EOF
+cat > $TEMPLATE_DIR/gs_seaside/run  <<-EOF
 	#!/bin/bash
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
@@ -49,15 +49,15 @@ cat > $TEMPLATE_DIR/gs_fastcgi/run  <<-EOF
 	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/seasideGem30 daemon \$GEM_PORT daemontools
 EOF
-chmod 755 $TEMPLATE_DIR/gs_fastcgi/run
+chmod 755 $TEMPLATE_DIR/gs_seaside/run
 
 # Create templates to run Seaside gems
 for i in `seq $STARTING_PORT $ENDING_PORT` ; do
-    # echo "Creating template in $TEMPLATE_DIR/gs_fastcgi-${i}"
-    mkdir -p $TEMPLATE_DIR/gs_fastcgi-${i}
-    ln -s /etc/sv/gs_fastcgi/run $TEMPLATE_DIR/gs_fastcgi-${i}
-    echo "export GEM_PORT=${i}" > $TEMPLATE_DIR/gs_fastcgi-${i}/config.local
-    chmod 644 $TEMPLATE_DIR/gs_fastcgi-${i}/config.local
+    # echo "Creating template in $TEMPLATE_DIR/gs_seaside-${i}"
+    mkdir -p $TEMPLATE_DIR/gs_seaside-${i}
+    ln -s /etc/sv/gs_seaside/run $TEMPLATE_DIR/gs_seaside-${i}
+    echo "export GEM_PORT=${i}" > $TEMPLATE_DIR/gs_seaside-${i}/config.local
+    chmod 644 $TEMPLATE_DIR/gs_seaside-${i}/config.local
 done
 
 echo "Created daemontools templates:"

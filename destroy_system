@@ -30,10 +30,10 @@ rm -f /home/glass/.sudo_as_admin_successful
 rm -f /home/glass/.viminfo
 rm -f /home/glass/.vsd*
 rm -f /home/glass/.Xauthority
+rm -rf /home/glass/stats
 
 rm /opt/gemstone/log/*
 rm /opt/gemstone/locks/*
-rm /opt/gemstone/stats*
 
 rm -rf /root
 mkdir /root
