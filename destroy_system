@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this"
+   exit
+fi 
+
+echo "DANGER: This script *destroys* things, do NOT run it unless you know what you are doing"
+echo "It's normally run by mounting the Appliance disk, not within a running system."
+echo "Continue anyway? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+cd /
+
+rm /home/glass/.bash_history
+rm -rf /home/glass/.cache/*
+rm -f /home/glass/.lesshist
+rm -f /home/glass/.sudo_as_admin_successful
+rm -f /home/glass/.viminfo
+rm -f /home/glass/.vsd*
+rm -f /home/glass/.Xauthority
+rm -f /home/glass/statmon*
+
+rm /opt/gemstone/log/*
+rm /opt/gemstone/locks/*
+
+rm -rf /root
+mkdir /root
+
+for i in `find /var/log -type f`; do
+        echo >  $i
+done

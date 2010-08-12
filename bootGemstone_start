@@ -25,16 +25,18 @@ esac
 
 for i in "/etc/rc0.d" "/etc/rc1.d" "/etc/rc6.d" ; do
     cd $i
-    ln -s ../init.d/gemstone K20gemstone
-    ln -s ../init.d/netldi K10netldi
     ln -s ../init.d/topaz K05topaz
+    ln -s ../init.d/statmon K07statmon
+    ln -s ../init.d/gemstone K10gemstone
+    ln -s ../init.d/netldi K20netldi
 done
 
 for i in " /etc/rc2.d" "/etc/rc3.d" "/etc/rc4.d" "/etc/rc5.d" ; do
     cd $i
-    ln -s ../init.d/gemstone S96gemstone
-    ln -s ../init.d/netldi S95netldi
-    ln -s ../init.d/topaz S97topaz
+    ln -s ../init.d/gemstone S95gemstone
+    ln -s ../init.d/netldi S96netldi
+    ln -s ../init.d/statmon S97statmon
+    ln -s ../init.d/topaz S98topaz
 done
 
 # Success

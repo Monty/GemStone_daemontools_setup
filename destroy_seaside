@@ -26,6 +26,7 @@ esac
 echo "Stopping GemStone ..."
 
 /etc/init.d/topaz stop 1 > /dev/null
+/etc/init.d/statmon stop 1 > /dev/null
 /etc/init.d/gemstone stop 1 > /dev/null
 /etc/init.d/netldi stop 1 > /dev/null
 

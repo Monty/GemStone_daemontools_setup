@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ### BEGIN INIT INFO
-# Provides:          gemstone-gem
+# Provides:          gemstone-statmon
 # Required-Stop:     $all
 # Required-Start:    $network gemstone-stone
 # Default-Start:     3
 # Default-Stop:      0 6
-# Short-Description: Start and stop Gemstone gems
-# Description:       This script starts and stops Gemstone gems
+# Short-Description: Start and stop Gemstone statmon
+# Description:       This script starts and stops Gemstone statmonitor
 ### END INIT INFO
 
 . /lib/lsb/init-functions
@@ -43,7 +43,7 @@ fi
 export GEMSTONE GEMSTONE_SYS_CONF GEMSTONE_EXE_CONF GEMSTONE_DATADIR GEMSTONE_LOGDIR \
        GEMSTONE_KEYFILE GEMSTONE_NAME PATH MANPATH LD_LIBRARY_PATH
 
-topaz_start()
+statmon_start()
 {
     # Move to a writable working directory
     cd /tmp
@@ -51,50 +51,44 @@ topaz_start()
     log_success_msg "Waiting for stone to complete startup..."
     waitstone $GEMSTONE_NAME
 
-    log_success_msg "Starting Gems..."
-
-    for i in `ls -d $SERVICE_DIR/gs_*`; do
-        echo "Starting $i ..."
-        svc -u $i
-    done
+    log_success_msg "Starting Statmon..."
+    echo "Starting $SERVICE_DIR/gs_statmon ..."
+    svc -u $SERVICE_DIR/gs_statmon
 }
 
-topaz_stop()
+statmon_stop()
 {
-    log_success_msg "Stopping Gems..."
-
-    for i in `ls -d $SERVICE_DIR/gs_*`; do
-        echo "Stopping $i ..."
-        svc -d $i
-    done
+    log_success_msg "Stopping Statmon..."
+    echo "Stopping $SERVICE_DIR/gs_statmon ..."
+    svc -d $SERVICE_DIR/gs_statmon
 }
 
-topaz_restart()
+statmon_restart()
 {
-    log_success_msg "Restarting Gems..."
-    topaz_stop
-    topaz_start
+    log_success_msg "Restarting Statmon..."
+    statmon_stop
+    statmon_start
 }
 
-topaz_status()
+statmon_status()
 {
-    svstat $SERVICE_DIR/gs_*
+    svstat $SERVICE_DIR/gs_statmon
 }
 
 case "$1" in
     start)
-           topaz_start 
+           statmon_start 
             ;;
     restart)
-            topaz_restart
+            statmon_restart
             ;;
     stop)
-            topaz_stop
+            statmon_stop
             ;;
     status)
-            topaz_status
+            statmon_status
             ;;
     *)
-            log_success_msg "Usage: /etc/init.d/topaz (start|stop|restart|status)"
+            log_success_msg "Usage: /etc/init.d/statmon (start|stop|restart|status)"
             ;;
 esac
