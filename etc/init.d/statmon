@@ -76,7 +76,7 @@ statmon_restart()
 
 statmon_status()
 {
-    svstat $SERVICE_DIR/gs_statmon
+    svstat $SERVICE_DIR/gs_statmon*
 }
 
 case "$1" in
