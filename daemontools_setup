@@ -95,7 +95,8 @@ for i in 1 60 ; do
 	mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
 	chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
 	cd /home/$GEMSTONE_USER/stats/${i}-second
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -r -h $HRS -i ${i} -A -z
+	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
 	EOF
 	chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
 done
