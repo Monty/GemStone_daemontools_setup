@@ -43,8 +43,10 @@ glass_ip_address_start()
     if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -gt 0 ]]; then
         echo "GLASS Appliance \"`hostname`\" has the following IPv4 addresses:" >> /etc/issue
         /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' >> /etc/issue
+        echo "" >> /etc/issue
     else
         echo "GLASS Appliance \"`hostname`\" has no IPv4 addresses" >> /etc/issue
+        echo "" >> /etc/issue
     fi
 
 }
