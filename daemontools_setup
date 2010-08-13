@@ -30,10 +30,14 @@ case "$SEASIDE_VERSION" in
     3.0)
     MAINT_SCRIPT="maintenanceGem30"
     GEM_SCRIPT="seasideGem30"
+    # We only need PARAMS because the PORT moved from $1 to $2 in 30
+    PARAMS="daemon \\\$GEM_PORT"
     ;;
     2.8)
     MAINT_SCRIPT="maintenanceGem"
     GEM_SCRIPT="seasideGem_FastCGI"
+    # We only need PARAMS because the PORT moved from $1 to $2 in 30
+    PARAMS="\\\$GEM_PORT"
     ;;
     *)
     echo "SEASIDE_VERSION in the config file is $SEASIDE_VERSION"
@@ -50,7 +54,7 @@ cat > $TEMPLATE_DIR/gs_maintenance/run  <<-EOF
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
 	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$MAINT_SCRIPT daemontools
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$MAINT_SCRIPT
 EOF
 chmod 755 $TEMPLATE_DIR/gs_maintenance/run
 
@@ -62,7 +66,7 @@ cat > $TEMPLATE_DIR/gstemplate_seaside/run  <<-EOF
 	scriptpath=\$(dirname \$0)
 	[ -r \$scriptpath/config.local ] && source \$scriptpath/config.local
 	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$GEM_SCRIPT \$GEM_PORT daemontools
+	exec setuidgid $GEMSTONE_USER \$GEMSTONE/seaside/bin/$GEM_SCRIPT $PARAMS
 EOF
 chmod 755 $TEMPLATE_DIR/gstemplate_seaside/run
 
@@ -89,14 +93,14 @@ for i in 1 60 ; do
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
 	mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
-    chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
+	chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
 	cd /home/$GEMSTONE_USER/stats/${i}-second
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -r -h $HRS -i ${i} -A -z
 	EOF
 done
 
 echo "Created daemontools templates:"
-ls -d $TEMPLATE_DIR/gs_*
+ls -d $TEMPLATE_DIR/gs_* $TEMPLATE_DIR/gstemplate_*
 
 # Success
 exit 0

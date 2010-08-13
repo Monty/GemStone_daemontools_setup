@@ -49,7 +49,7 @@ statmon_start()
     cd /tmp
 
     log_success_msg "Waiting for stone to complete startup..."
-    waitstone $GEMSTONE_NAME
+    waitstone $GEMSTONE_NAME > /dev/null
 
     log_success_msg "Starting Statmons..."
     for i in `ls -d $SERVICE_DIR/gs_statmon*`; do
