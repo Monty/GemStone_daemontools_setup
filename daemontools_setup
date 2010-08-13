@@ -76,6 +76,7 @@ for i in `seq $STARTING_PORT $ENDING_PORT` ; do
 done  
 
 # Create templates to run a '1-second' and a '60-second' statmon
+GS_OWNER="`ls -ld /home/$GEMSTONE_USER | awk '{ print $3 ":" $4 }'`"
 for i in 1 60 ; do
     # Rotate '1-second' logs hourly
     HRS="1"
@@ -87,7 +88,8 @@ for i in 1 60 ; do
 	#!/bin/bash
 	source /etc/default/gemstone
 	source \$GEMSTONE_CONFIG
-	exec setuidgid mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
+	mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
+    chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
 	cd /home/$GEMSTONE_USER/stats/${i}-second
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -r -h $HRS -i ${i} -A -z
 	EOF
