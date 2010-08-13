@@ -101,7 +101,7 @@ for i in 1 60 ; do
 		find /home/$GEMSTONE_USER/stats/${i}-second -type f -mtime $KEEP | xargs rm -f
 		cd /home/$GEMSTONE_USER/stats/${i}-second
 		exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
-    EOF
+	EOF
     chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
 done
 
