@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+# Find out where files are located
+source config
+source $GEMSTONE_CONFIG
+
+echo "This script starts all Gemstone processes."
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+/etc/init.d/netldi start 1 > /dev/null
+/etc/init.d/gemstone start 1 > /dev/null
+/etc/init.d/statmon start 1 > /dev/null
+/etc/init.d/topaz start 1 > /dev/null
+
+# Success
+exit 0
