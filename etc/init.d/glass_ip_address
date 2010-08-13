@@ -35,7 +35,7 @@ fi
 glass_ip_address_start()
 {
     cat > /etc/issue <<-EOF
-	GemStone/S GLASS Appliance: \n \l
+	GemStone/S GLASS Appliance \l
 	Built on Ubuntu 10.04 LTS
 	\d  \t
 
