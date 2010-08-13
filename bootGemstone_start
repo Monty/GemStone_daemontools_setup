@@ -25,6 +25,7 @@ esac
 
 for i in "/etc/rc0.d" "/etc/rc1.d" "/etc/rc6.d" ; do
     cd $i
+    ln -s ../init.d/glass_ip_address K05glass_ip_address
     ln -s ../init.d/topaz K05topaz
     ln -s ../init.d/statmon K07statmon
     ln -s ../init.d/gemstone K10gemstone
@@ -37,6 +38,7 @@ for i in " /etc/rc2.d" "/etc/rc3.d" "/etc/rc4.d" "/etc/rc5.d" ; do
     ln -s ../init.d/netldi S96netldi
     ln -s ../init.d/statmon S97statmon
     ln -s ../init.d/topaz S98topaz
+    ln -s ../init.d/glass_ip_address S98glass_ip_address
 done
 
 # Success

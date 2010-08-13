@@ -1,0 +1,75 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          gemstone-address
+# Required-Stop:     $all
+# Required-Start:    $network
+# Default-Start:     3
+# Default-Stop:      0 6
+# Short-Description: Put IP address in /etc/issue
+# Description:       This script copies it's IP Address to /etc/issue
+### END INIT INFO
+
+. /lib/lsb/init-functions
+. /etc/default/rcS
+
+# STARTUP_DEFAULTS must provide $GEMSTONE_CONFIG, the GemStone ENV setup file
+STARTUP_DEFAULTS=/etc/default/gemstone
+
+if [ -s $STARTUP_DEFAULTS ]; then
+    . $STARTUP_DEFAULTS
+    case "x$ENABLED" in
+        xtrue|x1|xyes)
+                ;;
+        *)
+                log_failure_msg "Gemstone startup disabled."
+                log_failure_msg "Edit /etc/default/gemstone, set ENABLED=1 to enable Gemstone startup at boot time"
+                exit 1
+                ;;
+    esac
+else
+    log_failure_msg "Configuration file $GEMSTONE_CONFIG not found, aborting startup"
+    exit 1
+fi
+		
+glass_ip_address_start()
+{
+    cat > /etc/issue <<-EOF
+	GemStone/S GLASS Appliance: \n \l
+	Built on Ubuntu 10.04 LTS
+	\d  \t
+
+	EOF
+    if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -gt 0 ]]; then
+        echo "GLASS Appliance \"`hostname`\" has the following IPv4 addresses:" >> /etc/issue
+        /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' >> /etc/issue
+    else
+        echo "GLASS Appliance \"`hostname`\" has no IPv4 addresses" >> /etc/issue
+    fi
+
+}
+
+glass_ip_address_stop()
+{
+    cat > /etc/issue <<-EOF
+	Ubuntu 10.04 LTS \n \l
+	
+	EOF
+}
+
+case "$1" in
+    start|restart)
+            glass_ip_address_start 
+            ;;
+    stop)
+            glass_ip_address_stop
+            ;;
+    status)
+            echo "/etc/issue contains:"
+            cat /etc/issue
+            ;;
+    *)
+            log_success_msg "Usage: /etc/init.d/glass_ip_address (start|stop|restart|status)"
+            ;;
+esac
+
