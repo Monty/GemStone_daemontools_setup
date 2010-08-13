@@ -27,5 +27,14 @@ esac
 /etc/init.d/statmon start 1 > /dev/null
 /etc/init.d/topaz start 1 > /dev/null
 
+# Infom user what things are running, sleep long enough for daemontools to start processes
+sleep 5
+echo ""
+echo "GemStone status:"
+$GEMSTONE/bin/gslist -clv
+echo ""
+svstat $SERVICE_DIR/gs_*
+echo ""
+
 # Success
 exit 0

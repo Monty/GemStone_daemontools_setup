@@ -9,7 +9,7 @@ fi
 source config
 source $GEMSTONE_CONFIG
 
-echo "This script stops all Gemstone processes."
+echo "This script stops all Gemstone processes. It may take a minute."
 echo "Shall I continue? (Y/N)"
 
 read cont
@@ -26,6 +26,15 @@ esac
 /etc/init.d/statmon stop 1 > /dev/null
 /etc/init.d/gemstone stop 1 > /dev/null
 /etc/init.d/netldi stop 1 > /dev/null
+
+# Infom user what things are running, sleep long enough for daemontools to start processes
+sleep 5
+echo ""
+echo "GemStone status:"
+$GEMSTONE/bin/gslist -clv
+echo ""
+svstat $SERVICE_DIR/gs_*
+echo ""
 
 # Cleanup logfiles too?
 numfiles="`ls -A $GEMSTONE_LOGDIR | wc -w `"
