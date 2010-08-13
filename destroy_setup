@@ -24,6 +24,9 @@ case "$cont" in
     ;;
 esac
 
+# Reset the /etc/issue file to it's Ubuntu default
+/etc/init.d/glass_ip_address stop
+
 rm -f /etc/init.d/gemstone /etc/init.d/netldi /etc/init.d/statmon /etc/init.d/topaz
 rm -f /etc/init.d/glass_ip_address
 rm -f $SEASIDE_BIN/maintenanceGem $SEASIDE_BIN/maintenanceGem30

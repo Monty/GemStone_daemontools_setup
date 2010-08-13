@@ -25,7 +25,6 @@ esac
 
 for i in "/etc/rc0.d" "/etc/rc1.d" "/etc/rc6.d" ; do
     cd $i
-    ln -s ../init.d/glass_ip_address K05glass_ip_address
     ln -s ../init.d/topaz K05topaz
     ln -s ../init.d/statmon K07statmon
     ln -s ../init.d/gemstone K10gemstone
