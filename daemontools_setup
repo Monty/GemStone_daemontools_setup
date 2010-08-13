@@ -31,13 +31,13 @@ case "$SEASIDE_VERSION" in
     MAINT_SCRIPT="maintenanceGem30"
     GEM_SCRIPT="seasideGem30"
     # We only need PARAMS because the PORT moved from $1 to $2 in 30
-    PARAMS="daemon \\\$GEM_PORT"
+    PARAMS='daemon $GEM_PORT'
     ;;
     2.8)
     MAINT_SCRIPT="maintenanceGem"
     GEM_SCRIPT="seasideGem_FastCGI"
     # We only need PARAMS because the PORT moved from $1 to $2 in 30
-    PARAMS="\\\$GEM_PORT"
+    PARAMS='$GEM_PORT'
     ;;
     *)
     echo "SEASIDE_VERSION in the config file is $SEASIDE_VERSION"

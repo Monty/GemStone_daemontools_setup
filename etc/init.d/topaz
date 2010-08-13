@@ -78,7 +78,7 @@ topaz_restart()
 
 topaz_status()
 {
-    svstat $SERVICE_DIR/gs_* $SERVICE_DIR/gs_maintenance
+    svstat $SERVICE_DIR/gs_seaside* $SERVICE_DIR/gs_maintenance
 }
 
 case "$1" in
