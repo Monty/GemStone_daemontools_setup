@@ -100,7 +100,7 @@ for i in 1 60 ; do
 		# Clear out old statmon files on startup
 		find /home/$GEMSTONE_USER/stats/${i}-second -type f $KEEP | xargs rm -f
 		cd /home/$GEMSTONE_USER/stats/${i}-second
-		exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
+		setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
 	EOF
     chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
 done

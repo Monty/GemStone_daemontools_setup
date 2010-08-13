@@ -6,8 +6,8 @@ To stop statmonitor processes use:
   sudo /etc/init.d/statmon stop
 
 The IP Address of this Appliance is printed out when you login. You can use:
-  ssh glass@<IP Address>
-to login from your system. You may find that preferable to logging in directly
+  ssh -Y glass@<IP Address>
+to login from your system. You may find that more usable than logging in directly
 to the VMware console.
 
 You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone, /etc/init.d/netldi,
