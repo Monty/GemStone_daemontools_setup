@@ -82,23 +82,27 @@ done
 # Create templates to run a '1-second' and a '60-second' statmon
 GS_OWNER="`ls -ld /home/$GEMSTONE_USER | awk '{ print $3 ":" $4 }'`"
 for i in 1 60 ; do
-    # Rotate '1-second' logs hourly
-    HRS="1"
-    # Rotate '60-second' logs daily
+    # Rotate '1-second' logs hourly, keep them 4 hours
+    HRS="1"; KEEP="4h"
+    # Rotate '60-second' logs daily, keep them 30 days
     [ $i = "60" ] && HRS="24"
+    [ $i = "60" ] && KEEP="30d"
     # echo "Creating template in $TEMPLATE_DIR/gs_statmon-${i}"
     mkdir -p $TEMPLATE_DIR/gs_statmon-${i}
     cat > $TEMPLATE_DIR/gs_statmon-${i}/run <<-EOF
-	#!/bin/bash
-	source /etc/default/gemstone
-	source \$GEMSTONE_CONFIG
-	mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
-	chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
-	cd /home/$GEMSTONE_USER/stats/${i}-second
-	\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
-	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
-	EOF
-	chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
+		#!/bin/bash
+		source /etc/default/gemstone
+		source \$GEMSTONE_CONFIG
+		\$GEMSTONE/bin/waitstone $GEMSTONE_NAME 2
+		# Create the stats directory if it's not there
+		mkdir -p /home/$GEMSTONE_USER/stats/${i}-second
+		chown -R $GS_OWNER /home/$GEMSTONE_USER/stats
+		# Clear out old statmon files on startup
+		find /home/$GEMSTONE_USER/stats/${i}-second -type f -mtime $KEEP | xargs rm -f
+		cd /home/$GEMSTONE_USER/stats/${i}-second
+		exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -rAzq -h $HRS -i ${i} 
+    EOF
+    chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
 done
 
 echo "Created daemontools templates:"
