@@ -97,6 +97,7 @@ for i in 1 60 ; do
 	cd /home/$GEMSTONE_USER/stats/${i}-second
 	exec setuidgid $GEMSTONE_USER \$GEMSTONE/bin/statmonitor $GEMSTONE_NAME -r -h $HRS -i ${i} -A -z
 	EOF
+	chmod 755 $TEMPLATE_DIR/gs_statmon-${i}/run
 done
 
 echo "Created daemontools templates:"
