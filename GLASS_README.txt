@@ -10,8 +10,8 @@ The IP Address of this Appliance is printed at boot time and when you login. Use
 to login from your system. You may find that environment more usable than logging
 in directly to the VMware console.
 
-To control GemStone running under daemontools, use Gemstone_start, Gemstone_stop,
-and Gemstone_status. You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone,
+To control GemStone running under daemontools, use gemstone_start, gemstone_stop,
+and gemstone_status. You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone,
 /etc/init.d/netldi, and /etc/init.d/statmon followed by start|stop|restart|status
 to control individual GemStone components.
 

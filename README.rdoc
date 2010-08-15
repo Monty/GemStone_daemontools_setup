@@ -30,6 +30,6 @@ your system sudoers file using "visudo".
 It's easier if you add the daemontools control scripts to your path, and define
 the GemStone environment variables in your bashrc rather than sourcing the
 definition each time you login. Add these lines:
-   export PATH=~/GemStone_daemontools_setup/bin:$PATH
+   export PATH=$PATH:~/GemStone_daemontools_setup/bin
    source /opt/gemstone/product/seaside/defSeaside
 
