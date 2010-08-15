@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+   echo "You must be root to run this!"
+   exit
+fi 
+
+### Warning!!! Don't use leading spaces rather than leading tabs in "Here Documents" ###
+
+# Find out where files are located
+source config
+source $GEMSTONE_CONFIG
+
+echo "`basename $0` creates and installs lighttpd configuration files for GLASS."
+echo "WARNING: It will overwrite /etc/lighttpd/conf-available/10-GLASS.conf"
+echo "and /etc/lighttpd/lighttpd.conf"
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+# Just in case dir isn't there already
+mkdir -p /etc/lighttpd/conf-available/
+
+# Copy a default lighttpd.conf file
+cp etc/lighttpd/lighttpd.conf /etc/lighttpd/lighttpd.conf
+
+# Create GLASS lighttpd config file beginning part
+cat > /etc/lighttpd/conf-available/10-GLASS.conf <<-EOF
+# Automatically generated GLASS configuration file
+server.modules   += ( "mod_fastcgi" )
+server.modules   += ( "mod_rewrite" )
+server.document-root = "$WWW_DOCROOT"
+fastcgi.debug = 1
+fastcgi.server    = (
+         "/" =>
+             (
+EOF
+#
+# Create GLASS lighttpd config file middle part for port assignments
+for i in `seq $STARTING_PORT $ENDING_PORT` ; do
+     cat >> /etc/lighttpd/conf-available/10-GLASS.conf <<-EOF
+	                 ("host" => "127.0.0.1","port" => $i,"check-local" => 
+	"disable","mode" => "responder" ),
+	EOF
+done  
+#
+# Create GLASS lighttpd config file ending part
+cat >> /etc/lighttpd/conf-available/10-GLASS.conf <<-EOF
+             ),
+)
+EOF
+
+# Success
+exit 0
