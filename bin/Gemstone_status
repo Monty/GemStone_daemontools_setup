@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ $UID -ne 0 ]; then
-   echo "You must be root to run this!"
-   exit
-fi 
-
 # Find out where files are located
 source config
 source $GEMSTONE_CONFIG
@@ -12,7 +7,7 @@ source $GEMSTONE_CONFIG
 # Infom user what things are running, sleep long enough for daemontools to start processes
 $GEMSTONE/bin/gslist -clv
 echo ""
-svstat $SERVICE_DIR/gs_*
+sudo svstat $SERVICE_DIR/gs_*
 
 # Success
 exit 0

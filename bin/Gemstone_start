@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ $UID -ne 0 ]; then
-   echo "You must be root to run this!"
-   exit
-fi 
-
 # Find out where files are located
 source config
 source $GEMSTONE_CONFIG
@@ -22,10 +17,10 @@ case "$cont" in
     ;;
 esac
 
-/etc/init.d/netldi start 1 > /dev/null
-/etc/init.d/gemstone start 1 > /dev/null
-/etc/init.d/statmon start 1 > /dev/null
-/etc/init.d/topaz start 1 > /dev/null
+sudo /etc/init.d/netldi start 1 > /dev/null
+sudo /etc/init.d/gemstone start 1 > /dev/null
+sudo /etc/init.d/statmon start 1 > /dev/null
+sudo /etc/init.d/topaz start 1 > /dev/null
 
 # Infom user what things are running, sleep long enough for daemontools to start processes
 sleep 5
@@ -33,7 +28,7 @@ echo ""
 echo "GemStone status:"
 $GEMSTONE/bin/gslist -clv
 echo ""
-svstat $SERVICE_DIR/gs_*
+sudo svstat $SERVICE_DIR/gs_*
 echo ""
 
 # Success
