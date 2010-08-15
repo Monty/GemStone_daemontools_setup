@@ -4,7 +4,7 @@
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
 source $GEMSTONE_CONFIG
 
-echo "This script stops all Gemstone processes. It may take a minute."
+echo "This script stops all Gemstone processes. It may take a minute..."
 echo "Shall I continue? (Y/N)"
 
 read cont
