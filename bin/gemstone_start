@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Find out where files are located
-source config
-source $GEMSTONE_CONFIG
+source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
+[ -z "$GEMSTONE" ] source $GEMSTONE_CONFIG
 
 echo "This script starts all Gemstone processes."
 echo "Shall I continue? (Y/N)"
