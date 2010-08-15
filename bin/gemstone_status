@@ -2,7 +2,7 @@
 
 # Find out where files are located
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
-[ -z "$GEMSTONE" ] source $GEMSTONE_CONFIG
+[ -z "$GEMSTONE" ] && source $GEMSTONE_CONFIG
 
 # Infom user what things are running, sleep long enough for daemontools to start processes
 $GEMSTONE/bin/gslist -clv

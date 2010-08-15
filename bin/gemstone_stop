@@ -2,7 +2,7 @@
 
 # Find out where files are located
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
-[ -z "$GEMSTONE" ] source $GEMSTONE_CONFIG
+[ -z "$GEMSTONE" ] && source $GEMSTONE_CONFIG
 
 echo "This script stops all Gemstone processes. It may take a minute."
 echo "Shall I continue? (Y/N)"
