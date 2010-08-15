@@ -22,7 +22,7 @@ sudo /etc/init.d/gemstone start 1 > /dev/null
 sudo /etc/init.d/statmon start 1 > /dev/null
 sudo /etc/init.d/topaz start 1 > /dev/null
 
-# Infom user what things are running, sleep long enough for daemontools to start processes
+# Inform user what things are running, sleep long enough for daemontools to start processes
 sleep 5
 echo ""
 echo "GemStone status:"
