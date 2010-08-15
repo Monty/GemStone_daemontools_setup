@@ -26,6 +26,9 @@ case "$cont" in
     ;;
 esac
 
+# Stop lighttpd
+/etc/init.d/lighttpd stop
+
 # Just in case dir isn't there already
 mkdir -p /etc/lighttpd/conf-available/
 
@@ -57,6 +60,9 @@ cat >> /etc/lighttpd/conf-available/10-GLASS.conf <<-EOF
              ),
 )
 EOF
+
+# Restart lighttpd
+/etc/init.d/lighttpd restart
 
 # Success
 exit 0

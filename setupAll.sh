@@ -45,6 +45,8 @@ esac
 #
 ./bootGemstone_setup
 #
+./lighttpd_setup
+#
 ./daemontools_start
 #
 ./bootGemstone_start
