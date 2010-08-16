@@ -4,7 +4,7 @@
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
 source $GEMSTONE_CONFIG
 
-echo "This script starts all Gemstone processes."
+echo "This script restarts all Gemstone processes."
 echo "Shall I continue? (Y/N)"
 
 read cont
