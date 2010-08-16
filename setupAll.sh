@@ -28,8 +28,10 @@ case "$cont" in
     ;;
 esac
 
+echo ""
 ./copySeasideScripts
 #
+echo ""
 case "$SEASIDE_VERSION" in
     3.0)
     ./daemontools_setup 3.0
@@ -43,13 +45,20 @@ case "$SEASIDE_VERSION" in
     ;;
 esac
 #
+echo ""
 ./bootGemstone_setup
 #
+echo ""
 ./lighttpd_setup
 #
+echo ""
 ./daemontools_start
 #
+echo ""
 ./bootGemstone_start
+#
+echo ""
+bin/gemstone_start
 
 # Success
 exit 0
