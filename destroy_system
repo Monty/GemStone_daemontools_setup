@@ -5,7 +5,9 @@ if [ $UID -ne 0 ]; then
    exit
 fi 
 
-echo "DANGER: This script *destroys* things, do NOT run it unless you know what you are doing"
+echo "DANGER: This script *destroys* things, do NOT run it unless you know what you are doing."
+echo "It's used to clean up unnecessary space in the GLASS Appliance before cloning it."
+echo "It assumes GemStone is installed in /opt/gemstone/ptoduct It may break your system!"
 echo "Continue anyway? (Y/N)"
 
 read cont
@@ -36,7 +38,6 @@ apt-get clean
 rm /home/glass/.bash_history
 rm -rf /home/glass/.cache/*
 rm -f /home/glass/.lesshist
-rm -f /home/glass/.sudo_as_admin_successful
 rm -f /home/glass/.viminfo
 rm -f /home/glass/.vsd*
 rm -f /home/glass/.Xauthority
@@ -44,6 +45,7 @@ rm -rf /home/glass/stats
 
 rm /opt/gemstone/log/*
 rm /opt/gemstone/locks/*
+rm -f /opt/gemstone/product/seaside/data/tranlog*
 
 rm -rf /root
 mkdir /root
