@@ -58,10 +58,25 @@ rm -f $GEMSTONE_LOGDIR/../locks/*
 rm -f $GEMSTONE_DATADIR/tranlog*
 rm -f $GEMSTONE_DATADIR/*pid
 
+# Get rid of any cached packages
+apt-get clean
+
+echo "DANGER: getting ready to remove /root and all /var/log logfiles."
+echo "Continue anyway? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+# Now get really down and dirty
 rm -rf /root
 mkdir /root
-
-apt-get clean
 
 for i in `find /var/log -type f`; do
         echo >  $i
