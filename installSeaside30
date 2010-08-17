@@ -19,8 +19,8 @@ case "$cont" in
 esac
 
 # Stop Topaz, but make sure Stone is running.
-/etc/init.d/topaz stop
-/etc/init.d/gemstone start
+sudo /etc/init.d/topaz stop
+sudo /etc/init.d/gemstone start
 
 if [ -s $GEMSTONE/seaside/etc/gemstone.secret ]; then
     . $GEMSTONE/seaside/etc/gemstone.secret
@@ -60,7 +60,7 @@ $GEMSTONE/bin/topaz -l -T50000 <<-EOF
 	errorCount
 	EOF
 
-/etc/init.d/topaz start
+sudo /etc/init.d/topaz start
 
 # Success
 exit 0

@@ -5,3 +5,4 @@ FullGLASS-rc4
   * Added this Changes file
   * Made destroy_system stop GemStone first, cleanup a few more files, and ask
     again before the really dangerous part.
+  * Enabled installSeaside30 to control daemontools
