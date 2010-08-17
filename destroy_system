@@ -7,7 +7,7 @@ fi
 
 echo "DANGER: This script *destroys* things, do NOT run it unless you know what you are doing."
 echo "It's used to clean up unnecessary space in the GLASS Appliance before cloning it."
-echo "It assumes GemStone is installed in /opt/gemstone/product. IT MAY BREAK YOUR SYSTEM!"
+echo "IT MAY BREAK YOUR SYSTEM!"
 echo "Continue anyway? (Y/N)"
 
 read cont
@@ -20,7 +20,14 @@ case "$cont" in
     ;;
 esac
 
-/etc/init.d/rsyslog stop
+# Make sure nothing is running related to GemStone
+/etc/init.d/topaz stop 1 > /dev/null
+/etc/init.d/statmon stop 1 > /dev/null
+/etc/init.d/gemstone stop 1 > /dev/null
+/etc/init.d/netldi stop 1 > /dev/null
+
+# Reset /etc/issue to remove IP address
+/etc/init.d/glass_ip_address stop
 
 # Clear /etc/udev/rules.d/70-persistent-net.rules
 cat > /etc/udev/rules.d/70-persistent-net.rules <<-EOF
@@ -31,24 +38,30 @@ cat > /etc/udev/rules.d/70-persistent-net.rules <<-EOF
     # line, and change only the value of the NAME= key.
 EOF
 
+# Quit logging
+/etc/init.d/rsyslog stop
+
 cd /
 
-apt-get clean
-
-rm /home/glass/.bash_history
+rm -f /home/glass/.bash_history
 rm -rf /home/glass/.cache/*
 rm -f /home/glass/.lesshist
+rm -f /home/glass/.sudo_as_admin_successful
 rm -f /home/glass/.viminfo
 rm -f /home/glass/.vsd*
 rm -f /home/glass/.Xauthority
 rm -rf /home/glass/stats
+rm -rf /home/glass/*log   # You may have gemnetobject logs
 
-rm /opt/gemstone/log/*
-rm /opt/gemstone/locks/*
-rm -f /opt/gemstone/product/seaside/data/tranlog*
+rm -f $GEMSTONE_LOGDIR/*
+rm -f $GEMSTONE_LOGDIR/../locks/*
+rm -f $GEMSTONE_DATADIR/tranlog*
+rm -f $GEMSTONE_DATADIR/*pid
 
 rm -rf /root
 mkdir /root
+
+apt-get clean
 
 for i in `find /var/log -type f`; do
         echo >  $i
