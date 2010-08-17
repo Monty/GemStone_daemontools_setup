@@ -1,0 +1,5 @@
+FullGLASS-rc4
+  * Added tool to help with GemTools logins: gemtools_login_help
+  * Removed glass.gemstone.com from hosts file
+  * Provided canonical hosts file: etc/hosts
+  * Added this Changes file
