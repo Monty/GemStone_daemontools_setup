@@ -54,4 +54,4 @@ for i in `find /var/log -type f`; do
         echo >  $i
 done
 
-echo "You can shutdown now to clone or snapshot this Appliance"
+echo "You should shutdown -h now to clone or snapshot this Appliance"
