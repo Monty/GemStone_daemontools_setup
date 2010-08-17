@@ -17,6 +17,10 @@ if [[ -x /sbin/ifconfig && `/sbin/ifconfig -a | grep -sc " inet addr:.*Bcast"` -
 else
     echo "[Info] `hostname` has no IPv4 addresses"
 fi
+# And how to login on one of them
+IP_ADDR1="`/sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' | head -1`"
+echo ""
+echo "You can login using: \"ssh -Y glass@$IP_ADDR1\" with the password \"glass\"."
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
