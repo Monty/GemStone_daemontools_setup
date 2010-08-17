@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Find out what IP addresses are available
+IP_ADDR="`/sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' | head -1`"
+
+
+echo "If you are having problems logging in from GemTools, folow these steps."
+echo "  1) Select \"Glass\"  in the top pane of the \"GemTools Launcher\" window."
+echo "  2) Click the \"New session\" button."
+echo "  3) Select \"Standard\""
+echo "  4) Paste the following block of text:"
+echo ""
+cat <<-EOF
+OGStandardSessionDescription new
+    name: 'Using IP address';
+    stoneHost: 'localhost';
+    stoneName: 'seaside';
+    gemHost: '$IP_ADDR';
+    netLDI: '50377';
+    userId: 'DataCurator';
+    password: 'swordfish';
+    backupDirectory: '';
+    yourself.
+EOF
+
+echo ""
+echo "  5) Click \"OK\""
+echo "  6) Select \"Using IP address\"  in the top pane of the \"GemTools Launcher\" window."
+echo "  7) Click the \"Login\" button."
+
+# Success
+exit 0
