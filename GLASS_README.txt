@@ -10,6 +10,10 @@ The IP Address of this Appliance is printed at boot time and when you login. Use
 to login from your system. You may find that environment more usable than logging
 in directly to the VMware console.
 
+If you have problems logging in from GemTools, make sure you are using a current
+GemTools version, then use this command for assistance:
+  gemtools_login_help
+
 To control GemStone running under daemontools, use gemstone_start, gemstone_stop,
 and gemstone_status. You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone,
 /etc/init.d/netldi, and /etc/init.d/statmon followed by start|stop|restart|status
