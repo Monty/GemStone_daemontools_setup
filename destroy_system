@@ -39,7 +39,7 @@ cat > /etc/udev/rules.d/70-persistent-net.rules <<-EOF
 EOF
 
 # Quit logging
-/etc/init.d/rsyslog stop
+service rsyslog stop
 
 cd /
 
