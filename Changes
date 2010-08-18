@@ -1,6 +1,7 @@
 Changes since FullGLASS-rc4
   * Created statmon_purge command to assist in cleaning up old statmon files
   * No longer automatically purge statmon files on bootup
+  * gemstone_status now takes a parameter: the number of seconds to sleep, clear, & repeat
 
 Changes since FullGLASS-rc3
   * Added tool to help with GemTools logins: gemtools_login_help

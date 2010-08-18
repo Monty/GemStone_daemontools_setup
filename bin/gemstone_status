@@ -4,10 +4,25 @@
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
 source $GEMSTONE_CONFIG
 
-# Inform user what things are running, sleep long enough for daemontools to start processes
-$GEMSTONE/bin/gslist -clv
-echo ""
-sudo svstat $SERVICE_DIR/gs_*
+function _gs_status () {
+    $GEMSTONE/bin/gslist -clv
+    echo ""
+    sudo svstat $SERVICE_DIR/gs_*
+}
+
+
+# Inform user what things are running
+# If a parameter is supplied, take it as a time to sleep/repeat status display
+if [ $# -ge 1 ]; then
+    clear
+    while true; do
+        _gs_status
+        sleep $1
+        clear
+    done
+else
+    _gs_status
+fi
 
 # Success
 exit 0
