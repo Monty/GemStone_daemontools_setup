@@ -21,8 +21,9 @@ to control individual GemStone components.
 
 Two statmonitor processes are running. One monitors at 1-second intervals, the
 other at 60-second intervals. Their output is in stats/1-second and
-stats/60-second directories respectively. Running 'sudo /etc/init.d/statmon start'
+stats/60-second directories respectively. The convenience command statmon_purge
 deletes 1-second stats older than 4 hours and 60-second stats older than 30 days.
+You may chose to purge statmon files manually (or never).
 
 The directory GemStone_daemontools_setup contains the scripts that were used to
 create this GLASS appliance. You do not need to run them again.  We've left the

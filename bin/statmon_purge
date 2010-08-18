@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Find out where files are located
+source /etc/default/gemstone   # Provide $GEMSTONE_CONFIG
+source $GEMSTONE_CONFIG
+
+echo "`basename $0` deletes \"1-second\" statmon files older than 4 hours"
+echo "and \"60-second\" statmon files older than 30 days." 
+echo "Shall I continue? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ;;
+    *)
+    echo "Not continuing"
+    exit
+    ;;
+esac
+
+# Keep '1-second' logs four hours
+find /home/$GEMSTONE_USER/stats/1-second -type f -mmin +240 -delete
+# Keep '60-second' logs 30 days
+find /home/$GEMSTONE_USER/stats/60-second -type f -mtime +30 -delete
+
+# Success
+exit 0
