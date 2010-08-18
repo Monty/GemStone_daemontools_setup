@@ -27,7 +27,7 @@ esac
 /etc/init.d/netldi stop 1 > /dev/null
 
 # Reset /etc/issue to remove IP address
-service rsyslog stop
+/etc/init.d/glass_ip_address stop
 
 # Clear /etc/udev/rules.d/70-persistent-net.rules
 cat > /etc/udev/rules.d/70-persistent-net.rules <<-EOF
