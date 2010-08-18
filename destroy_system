@@ -53,10 +53,19 @@ rm -f /home/glass/.Xauthority
 rm -rf /home/glass/stats
 rm -rf /home/glass/*log   # You may have gemnetobject logs
 
-rm -f $GEMSTONE_LOGDIR/*
-rm -f $GEMSTONE_LOGDIR/../locks/*
-rm -f $GEMSTONE_DATADIR/tranlog*
-rm -f $GEMSTONE_DATADIR/*pid
+if [[ ! -z "$GEMSTONE_LOGDIR" ]]; then
+    rm -f $GEMSTONE_LOGDIR/*
+    rm -f $GEMSTONE_LOGDIR/../locks/*
+else
+    echo "WARNING: GEMSTONE_LOGDIR not defined."
+fi
+#
+if [[ ! -z "$GEMSTONE_DATADIR" ]]; then
+    rm -f $GEMSTONE_DATADIR/tranlog*
+    rm -f $GEMSTONE_DATADIR/*pid
+else
+    echo "WARNING: GEMSTONE_DATADIR not defined."
+fi
 
 # Get rid of any cached packages
 apt-get clean
