@@ -45,9 +45,11 @@ glass_ip_address_start()
         echo "GLASS Appliance \"`hostname`\" has the following IPv4 addresses:" >> /etc/issue
         /sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' >> /etc/issue
         echo "" >> /etc/issue
+        IP_ADDR1="`/sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' | head -1`"
+        echo "You can login using: \"ssh -Y glass@$IP_ADDR1\" with password \"glass\"." >> /etc/issue
     else
         echo "GLASS Appliance \"`hostname`\" does not yet have an IPv4 addresses" >> /etc/issue
-        echo "Please login to the console as user \"glass\"." >> /etc/issue
+        echo "Please login to the console as user \"glass\" with password \"glass\"." >> /etc/issue
         echo "" >> /etc/issue
     fi
 
