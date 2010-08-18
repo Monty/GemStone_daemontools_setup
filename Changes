@@ -1,8 +1,9 @@
-FullGLASS-rc4
+Changes since FullGLASS-rc3
   * Added tool to help with GemTools logins: gemtools_login_help
   * Removed glass.gemstone.com from hosts file
-  * Provided canonical hosts file: etc/hosts
+  * Provided a canonical hosts file: etc/hosts
   * Added this Changes file
   * Made destroy_system stop GemStone first, cleanup a few more files, and ask
     again before the really dangerous part.
   * Enabled installSeaside30 to control daemontools
+  * Display full login instructions in console window
