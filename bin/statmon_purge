@@ -5,15 +5,26 @@ source /etc/default/gemstone   # Provide $GEMSTONE_CONFIG
 source $GEMSTONE_CONFIG
 
 echo "`basename $0` deletes \"1-second\" statmon files older than 4 hours"
-echo "and \"60-second\" statmon files older than 30 days." 
-echo "Shall I continue? (Y/N)"
+echo "and \"60-second\" statmon files older than 30 days. Would you like to"
+echo "first see a list of ALL statmon files, sorted by date? (Y/N)"
+
+read cont
+case "$cont" in
+    y|Y|yes)
+    ls -lRt /home/$GEMSTONE_USER/stats/*
+    ;;
+    *)
+    ;;
+esac
+
+echo "Shall I purge out-of-date files? (Y/N)"
 
 read cont
 case "$cont" in
     y|Y|yes)
     ;;
     *)
-    echo "Not continuing"
+    echo "Not purging out-of-date files"
     exit
     ;;
 esac
