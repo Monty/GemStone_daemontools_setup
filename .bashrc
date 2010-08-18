@@ -20,7 +20,10 @@ fi
 # And how to login on one of them
 IP_ADDR1="`/sbin/ifconfig -a | grep ' inet addr:.*Bcast' | cut -f2 -d: | cut -f1 -d' ' | head -1`"
 echo ""
-echo "You can login using: \"ssh -Y glass@$IP_ADDR1\" with password \"glass\"."
+echo "You can:"
+echo "  Connect to Seaside at: http://$IP_ADDR1."
+echo "  Login to `hostname` using \"ssh -Y glass@$IP_ADDR1\" with password \"glass\"."
+echo "  Monitor status every 10 seconds using \"gemstone_status 10\"."
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
