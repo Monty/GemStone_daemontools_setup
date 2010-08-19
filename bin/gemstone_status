@@ -17,6 +17,8 @@ if [ $# -ge 1 ]; then
     clear
     while true; do
         _gs_status
+        echo ""
+        echo "Hit ^C to exit."
         sleep $1
         clear
     done
