@@ -18,7 +18,7 @@ using your own customized script, or loading Seaside interactively.
 
 There are some utility scripts not run by setupAll.sh that can be useful when
 testing.  Even though they prompt you before executing, you should read them and
-understand what they do before using them -- particularly any destroy scripts.
+understand what they do before using them -- particularly any 'destroy_' scripts.
 
 === Setting up your user account
 
