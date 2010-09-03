@@ -1,9 +1,11 @@
 GemStone starts automatically when this GLASS Appliance is booted.  Seaside gems
 and statmonitor processes that are killed will be restarted automatically by
-daemontools. To stop the Seaside gems use:
-  sudo /etc/init.d/topaz stop
-To stop statmonitor processes use:
-  sudo /etc/init.d/statmon stop
+daemontools.
+
+To control GemStone running under daemontools, use gemstone_start, gemstone_stop,
+and gemstone_status. You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone,
+/etc/init.d/netldi, and /etc/init.d/statmon followed by start|stop|restart|status
+to control individual GemStone components.
 
 The IP Address of this Appliance is printed at boot time and when you login. Use:
   ssh -Y glass@<IP Address>
@@ -13,11 +15,6 @@ in directly to the VMware console.
 If you have problems logging in from GemTools, make sure you are using a current
 GemTools version, then use this command for assistance:
   gemtools_login_help
-
-To control GemStone running under daemontools, use gemstone_start, gemstone_stop,
-and gemstone_status. You can use [sudo] /etc/init.d/topaz, /etc/init.d/gemstone,
-/etc/init.d/netldi, and /etc/init.d/statmon followed by start|stop|restart|status
-to control individual GemStone components.
 
 Two statmonitor processes are running. One monitors at 1-second intervals, the
 other at 60-second intervals. Their output is in stats/1-second and
