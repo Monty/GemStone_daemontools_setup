@@ -28,7 +28,16 @@ esac
 
 case "$SEASIDE_VERSION" in
     3.0)
-    MAINT_SCRIPT="maintenanceGem30"
+        case "$GEMSTONE_VERSION" in
+        2.4) MAINT_SCRIPT="maintenanceGemSea30_oodb24";;
+        3.1) MAINT_SCRIPT="maintenanceGemSea30_oodb31";;
+        *)
+        echo "GEMSTONE_VERSION in the config file is $GEMSTONE_VERSION"
+        echo "it must be either 2.4 or 3.1"
+        exit 1
+         ;;
+        esac
+
     GEM_SCRIPT="seasideGem30"
     # We only need PARAMS because the PORT moved from $1 to $2 in 30
     PARAMS='daemon $GEM_PORT'
