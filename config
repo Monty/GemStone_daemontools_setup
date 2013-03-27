@@ -6,6 +6,8 @@ export TEMPLATE_DIR="/etc/sv"     # Holds template directories containing daemon
 export SERVICE_DIR="/etc/service" # Holds directories that get linked to template directories.
 
 # Needed by setup scripts
+export GEMSTONE_VERSION=3.1	  # Must be 2.4 or 3.1 Add by DTR for maintenance script setup
+#
 export SEASIDE_VERSION=3.0        # Must be 2.8 or 3.0
 export STARTING_PORT=9001         # First port for Gems -- will increment by one through ending port
 export ENDING_PORT=9003           # Last port for Gems
