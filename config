@@ -11,7 +11,10 @@ export GEMSTONE_VERSION=3.1	  # Must be 2.4 or 3.1 Add by DTR for maintenance sc
 export SEASIDE_VERSION=3.0        # Must be 2.8 or 3.0
 export STARTING_PORT=9001         # First port for Gems -- will increment by one through ending port
 export ENDING_PORT=9003           # Last port for Gems
-export WWW_DOCROOT="/var/www"     # Static document-root for lighttpd config
+
+# Uncomment the following two lines if want to include lighttpd in daemontools setup
+# export LIGHTTPD_SETUP="YES"
+# export WWW_DOCROOT="/var/www"     # Static document-root for lighttpd config
 
 # GS_HOME must point to the location of gsDevKitHome 
 # GS_STONE must identify the name of the gsDevKitHome stone
