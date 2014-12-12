@@ -7,7 +7,11 @@ fi
 
 # Find out where files are located
 source config
-source $GEMSTONE_CONFIG
+if [ "${GEMSTONE_CONFIG}x" = "x" ] ; then
+  source $GS_HOME/gemstone/stones/$GS_STONE/defStone.env $GS_STONE
+else
+  source $GEMSTONE_CONFIG
+fi
 
 echo "`basename $0` copies modified Seaside scripts to $GEMSTONE/seaside/bin"
 echo "They do not overwrite existing scripts, as they have different names."

@@ -49,7 +49,14 @@ echo ""
 ./bootGemstone_setup
 #
 echo ""
-./lighttpd_setup
+case "$LIGHTTPD_SETUP" in
+  YES)
+    ./lighttpd_setup
+    ;;
+  *)
+    echo "./lighttpd_setup skipped ..."
+    ;;
+esac
 #
 echo ""
 ./daemontools_start

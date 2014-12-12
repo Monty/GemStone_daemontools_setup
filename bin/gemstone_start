@@ -2,7 +2,11 @@
 
 # Find out where files are located
 source /etc/default/gemstone   # Provide $SERVICE_DIR and $GEMSTONE_CONFIG
-source $GEMSTONE_CONFIG
+if [ "${GEMSTONE_CONFIG}x" = "x" ] ; then
+  source $GS_HOME/gemstone/stones/$GS_STONE/defStone.env $GS_STONE
+else
+  source $GEMSTONE_CONFIG
+fi
 
 echo "This script restarts all Gemstone processes."
 echo "Shall I continue? (Y/N)"

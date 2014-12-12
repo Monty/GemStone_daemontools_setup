@@ -2,7 +2,11 @@
 
 # Find out where files are located
 source /etc/default/gemstone   # Provide $GEMSTONE_CONFIG
-source $GEMSTONE_CONFIG
+if [ "${GEMSTONE_CONFIG}x" = "x" ] ; then
+  source $GS_HOME/gemstone/stones/$GS_STONE/defStone.env $GS_STONE
+else
+  source $GEMSTONE_CONFIG
+fi
 
 echo "`basename $0` deletes \"1-second\" statmon files older than 4 hours"
 echo "and \"60-second\" statmon files older than 30 days. Would you like to"
