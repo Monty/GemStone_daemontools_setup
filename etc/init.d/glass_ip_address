@@ -13,7 +13,7 @@
 . /lib/lsb/init-functions
 . /etc/default/rcS
 
-# STARTUP_DEFAULTS must provide $GEMSTONE_CONFIG, the GemStone ENV setup file
+# STARTUP_DEFAULTS must provide $GEMSTONE_CONFIG or $GS_HOME and $GS_STONE, the GemStone ENV setup file
 STARTUP_DEFAULTS=/etc/default/gemstone
 
 if [ -s $STARTUP_DEFAULTS ]; then
@@ -28,7 +28,7 @@ if [ -s $STARTUP_DEFAULTS ]; then
                 ;;
     esac
 else
-    log_failure_msg "Configuration file $GEMSTONE_CONFIG not found, aborting startup"
+    log_failure_msg "Configuration file $STARTUP_DEFAULTS not found, aborting startup"
     exit 1
 fi
 		

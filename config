@@ -13,6 +13,14 @@ export STARTING_PORT=9001         # First port for Gems -- will increment by one
 export ENDING_PORT=9003           # Last port for Gems
 export WWW_DOCROOT="/var/www"     # Static document-root for lighttpd config
 
+# GS_HOME must point to the location of gsDevKitHome 
+# GS_STONE must identify the name of the gsDevKitHome stone
+# Comment out the following three lines if NOT using GsDevKit/gsDevKitHome 
+export GS_HOME=/home/notroot/gsDevKitHome
+export GS_STONE=kit
+export GEMSTONE_USER=notroot
+
 # The following file must export these ENV variables:
 # GEMSTONE, GEMSTONE_LOGDIR, GEMSTONE_NAME, GEMSTONE_USER
-export GEMSTONE_CONFIG="/opt/gemstone/product/seaside/defSeaside"   # GemStone ENV setup file
+# Uncomment out the following line and set appropriately if NOT using GsDevKit/gsDevKitHome
+# export GEMSTONE_CONFIG="/opt/gemstone/product/seaside/defSeaside"   # GemStone ENV setup file
